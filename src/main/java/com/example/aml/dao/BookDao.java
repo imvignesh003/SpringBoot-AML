@@ -1,6 +1,8 @@
 package com.example.aml.dao;
 
 import com.example.aml.model.Book;
+
+import java.util.List;
 import java.util.UUID;
 // For any class that wishes to be a Book, the class must have the following
 public interface BookDao {
@@ -9,4 +11,6 @@ public interface BookDao {
         UUID id = UUID.randomUUID();
         return insertBook(id, book);
     }
+
+    List<Book> selectAllBooks();
 }
