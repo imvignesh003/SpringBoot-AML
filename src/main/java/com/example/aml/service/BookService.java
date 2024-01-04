@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BookService {
@@ -23,5 +25,17 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return bookDao.selectAllBooks();
+    }
+
+    public Optional<Book> selectBookById(UUID id) {
+        return bookDao.selectBookById(id);
+    }
+
+    public int deleteBookById(UUID id) {
+        return bookDao.deleteBookById(id);
+    }
+
+    public int updateBookById(UUID id, Book book) {
+        return bookDao.updateBookById(id, book);
     }
 }
