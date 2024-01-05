@@ -15,7 +15,7 @@ public class BookService {
     private final BookDao bookDao;
 
     @Autowired // constructor will run automatically with parameters stored in Spring reference area
-    public BookService(@Qualifier("TemporaryDAO") BookDao bookDao) {
+    public BookService(@Qualifier("postgres") BookDao bookDao) {
         this.bookDao = bookDao;
     }
 

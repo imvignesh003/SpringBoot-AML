@@ -1,0 +1,12 @@
+# This is where all properties go
+# You can define different properties for different environments (ex. demo, dev, prod)
+
+#We will also use flyway. It allows us to manage our DB schema as it evolves
+
+# Connection Details for Database
+app:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/demodb
+    username: postgres
+    password: password
+    pool-size: 30

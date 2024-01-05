@@ -1,59 +1,78 @@
 package com.example.aml.dao;
 
 import com.example.aml.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("TemporaryDAO") // @Component also works -- this tells the program that this exists
+@Repository("postgres") //uses a postgres DB
 public class BookDataAccessService implements BookDao {
 
-    private static List<Book> bookDB = new ArrayList<>();
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public BookDataAccessService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public int insertBook(UUID id, Book book) {
-        bookDB.add(new Book(id, book.getName()));
-        return 1;
+        var statement = """
+                INSERT INTO book(id, name)
+                VALUES (?, ?)
+                """;
+        return jdbcTemplate.update(
+                statement,
+                id,
+                book.getName());
     }
 
     @Override
     public List<Book> selectAllBooks() {
-        return bookDB;
+        return jdbcTemplate.query(
+                "SELECT * FROM book",
+                (resultSet, i) -> new Book(
+                        UUID.fromString(resultSet.getString("id")),
+                        resultSet.getString("name")));
     }
 
     @Override
     public int deleteBookById(UUID id) {
-        Optional<Book> book = selectBookById(id);
-        if (book.isPresent()) {
-            bookDB.remove(book.get());
-            return 1;
-        }
-        return 0;
+        var statement = """
+                DELETE FROM book
+                WHERE id = ?
+                """;
+        return jdbcTemplate.update(
+                statement,
+                id);
     }
 
     @Override
     public int updateBookById(UUID id, Book book) {
-        return selectBookById(id)
-                .map(oldBook ->
-                        {
-                            int index = bookDB.indexOf(oldBook);
-                            if (index >= 0) {
-                                bookDB.set(index, new Book(
-                                        id, book.getName()
-                                )); // if you need to modify this, create a new Book constructor
-                                return 1;
-                            }
-                            return 0;
-                        }).orElse(0);
+        var statement = """
+                UPDATE book
+                SET id = ?, name = ?
+                WHERE id = ?
+                """;
+        return jdbcTemplate.update(
+                statement,
+                id,
+                book.getName(),
+                id);
     }
 
     @Override
     public Optional<Book> selectBookById(UUID id) {
-        return bookDB.stream().filter(
-                book -> book.getId().equals(id))
-                .findFirst();
+        return Optional.ofNullable(
+                jdbcTemplate.queryForObject(
+                "SELECT * FROM book WHERE id = ?",
+                new Object[]{id},
+                (resultSet, i) -> new Book(
+                        UUID.fromString(resultSet.getString("id")),
+                        resultSet.getString("name"))));
     }
 }
