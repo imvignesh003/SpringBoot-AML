@@ -22,13 +22,14 @@ public class BookDataAccessService implements BookDao {
     @Override
     public int insertBook(UUID id, Book book) {
         var statement = """
-                INSERT INTO book(id, name)
-                VALUES (?, ?)
+                INSERT INTO book(id, name, primary_author)
+                VALUES (?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 statement,
                 id,
-                book.getName());
+                book.getName(),
+                book.getAuthor());
     }
 
     @Override
@@ -37,7 +38,8 @@ public class BookDataAccessService implements BookDao {
                 "SELECT * FROM book",
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
-                        resultSet.getString("name")));
+                        resultSet.getString("name"),
+                        resultSet.getString("primary_author")));
     }
 
     @Override
@@ -55,13 +57,14 @@ public class BookDataAccessService implements BookDao {
     public int updateBookById(UUID id, Book book) {
         var statement = """
                 UPDATE book
-                SET id = ?, name = ?
+                SET id = ?, name = ?, primary_author = ?
                 WHERE id = ?
                 """;
         return jdbcTemplate.update(
                 statement,
                 id,
                 book.getName(),
+                book.getAuthor(),
                 id);
     }
 
@@ -73,6 +76,7 @@ public class BookDataAccessService implements BookDao {
                 new Object[]{id},
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
-                        resultSet.getString("name"))));
+                        resultSet.getString("name"),
+                        resultSet.getString("primary_author"))));
     }
 }
