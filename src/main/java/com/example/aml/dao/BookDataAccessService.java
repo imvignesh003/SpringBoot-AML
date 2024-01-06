@@ -22,14 +22,16 @@ public class BookDataAccessService implements BookDao {
     @Override
     public int insertBook(UUID id, Book book) {
         var statement = """
-                INSERT INTO book(id, name, primary_author)
-                VALUES (?, ?, ?)
+                INSERT INTO book(id, name, primary_author, year_published, word_count)
+                VALUES (?, ?, ?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 statement,
                 id,
                 book.getName(),
-                book.getAuthor());
+                book.getAuthor(),
+                book.getYearPublished(),
+                book.getWordCount());
     }
 
     @Override
@@ -39,7 +41,9 @@ public class BookDataAccessService implements BookDao {
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("name"),
-                        resultSet.getString("primary_author")));
+                        resultSet.getString("primary_author"),
+                        resultSet.getInt("year_published"),
+                        resultSet.getInt("word_count")));
     }
 
     @Override
@@ -57,7 +61,12 @@ public class BookDataAccessService implements BookDao {
     public int updateBookById(UUID id, Book book) {
         var statement = """
                 UPDATE book
-                SET id = ?, name = ?, primary_author = ?
+                SET
+                    id = ?,
+                    name = ?,
+                    primary_author = ?,
+                    year_published = ?,
+                    word_count = ?
                 WHERE id = ?
                 """;
         return jdbcTemplate.update(
@@ -65,6 +74,8 @@ public class BookDataAccessService implements BookDao {
                 id,
                 book.getName(),
                 book.getAuthor(),
+                book.getYearPublished(),
+                book.getWordCount(),
                 id);
     }
 
@@ -77,6 +88,8 @@ public class BookDataAccessService implements BookDao {
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("name"),
-                        resultSet.getString("primary_author"))));
+                        resultSet.getString("primary_author"),
+                        resultSet.getInt("year_published"),
+                        resultSet.getInt("word_count"))));
     }
 }
