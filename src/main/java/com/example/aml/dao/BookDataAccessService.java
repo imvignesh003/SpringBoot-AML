@@ -30,8 +30,8 @@ public class BookDataAccessService implements BookDao {
                 id,
                 book.getName(),
                 book.getAuthor(),
-                book.getYearPublished(),
-                book.getWordCount());
+                book.getYear_published(),
+                book.getWord_count());
     }
 
     @Override
@@ -74,8 +74,8 @@ public class BookDataAccessService implements BookDao {
                 id,
                 book.getName(),
                 book.getAuthor(),
-                book.getYearPublished(),
-                book.getWordCount(),
+                book.getYear_published(),
+                book.getWord_count(),
                 id);
     }
 
