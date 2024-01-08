@@ -13,6 +13,8 @@ public class ArtMediaLiteratureApplication {
 }
 
 /*
+For API instructions, see Controllers under "api" package
+
 PROJECT STRUCTURE
 
 REQUEST -> API (Controller) LAYER -> SERVICE LAYER -> DATA ACCESS LAYER -> DB
