@@ -40,7 +40,7 @@ public class BookController {
         bookService.addBook(book);
     }
 
-    @GetMapping
+    @GetMapping // ex. localhost:8080/api/v1/book
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
