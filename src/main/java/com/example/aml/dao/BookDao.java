@@ -20,4 +20,6 @@ public interface BookDao {
     int updateBookById(UUID id, Book book);
 
     Optional<Book> selectBookById(UUID id);
+
+    List<Book> selectBooksByAuthor(String authorName);
 }

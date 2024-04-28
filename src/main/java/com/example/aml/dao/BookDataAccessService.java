@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -91,5 +92,25 @@ public class BookDataAccessService implements BookDao {
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count"))));
+    }
+
+    @Override
+    public List<Book> selectBooksByAuthor(String authorName) {
+        return jdbcTemplate.query(
+                """
+                        SELECT *
+                        FROM book
+                        WHERE primary_author = ?;
+                        """,
+                new String[]{authorName},
+                new int[] {
+                        Types.VARCHAR
+                },
+                (resultSet, i) -> new Book(
+                        UUID.fromString(resultSet.getString("id")),
+                        resultSet.getString("name"),
+                        resultSet.getString("primary_author"),
+                        resultSet.getInt("year_published"),
+                        resultSet.getInt("word_count")));
     }
 }

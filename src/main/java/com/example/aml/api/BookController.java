@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 // This REST API will provide CRUD-like operations on a personal database for works of Art, Media, and Literature
@@ -51,6 +52,11 @@ public class BookController {
     public Book selectBookById(@PathVariable("id") UUID id) {
         return bookService.selectBookById(id)
                 .orElse(null);
+    }
+
+    @GetMapping(path = "byAuthor")
+    public List<Book> getBooksByAuthor(@RequestParam Map<String, String> params) {
+        return bookService.getBooksByAuthor(params.get("name"));
     }
 
     @DeleteMapping(path = "{id}")

@@ -31,6 +31,10 @@ public class BookService {
         return bookDao.selectBookById(id);
     }
 
+    public List<Book> getBooksByAuthor(String authorName) {
+        return bookDao.selectBooksByAuthor(authorName);
+    }
+
     public int deleteBookById(UUID id) {
         return bookDao.deleteBookById(id);
     }

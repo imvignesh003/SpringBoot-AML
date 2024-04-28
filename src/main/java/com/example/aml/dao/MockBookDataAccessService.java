@@ -65,4 +65,10 @@ public class MockBookDataAccessService implements BookDao {
                 book -> book.getId().equals(id))
                 .findFirst();
     }
+
+    @Override
+    public List<Book> selectBooksByAuthor(String authorName) {
+        return bookDB.stream().filter(
+                book -> book.getAuthor().equals(authorName)).toList();
+    }
 }
