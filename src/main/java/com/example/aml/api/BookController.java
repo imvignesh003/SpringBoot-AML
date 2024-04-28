@@ -24,6 +24,7 @@ To send requests to this API:
     }
  */
 
+@CrossOrigin(origins = "*")
 @RequestMapping("api/v1/book") // The api link
 @RestController // This is a RestAPI -- exposes endpoint for client
 public class BookController {
