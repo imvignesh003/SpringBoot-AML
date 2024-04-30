@@ -1,7 +1,7 @@
 TO-DO List
 
 
-- "Get" lists of authors, titles
+- "get" lists of authors, titles
 - Add "get" list of books by author functionality
   - Sort by: alphabetically, number of titles, popularity, reviews
 - Resist the temptation to expand to films, documentaries, music, etc.

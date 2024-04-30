@@ -17,8 +17,8 @@ public class MockBookDataAccessService implements BookDao {
     public int insertBook(UUID id, Book book) {
         bookDB.add(new Book(
                 id,
-                book.getName(),
-                book.getAuthor(),
+                book.getWork_name(),
+                book.getPrimary_author(),
                 book.getYear_published(),
                 book.getWord_count()));
         return 1;
@@ -48,8 +48,8 @@ public class MockBookDataAccessService implements BookDao {
                             if (index >= 0) {
                                 bookDB.set(index, new Book(
                                         id,
-                                        book.getName(),
-                                        book.getAuthor(),
+                                        book.getWork_name(),
+                                        book.getPrimary_author(),
                                         book.getYear_published(),
                                         book.getWord_count()
                                 )); // if you need to modify this, create a new Book constructor
@@ -69,6 +69,6 @@ public class MockBookDataAccessService implements BookDao {
     @Override
     public List<Book> selectBooksByAuthor(String authorName) {
         return bookDB.stream().filter(
-                book -> book.getAuthor().equals(authorName)).toList();
+                book -> book.getPrimary_author().equals(authorName)).toList();
     }
 }

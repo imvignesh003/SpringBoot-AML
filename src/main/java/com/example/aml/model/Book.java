@@ -11,8 +11,8 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor=@__(@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)))
 public class Book {
     private final UUID id;
-    @NotBlank private final String name;
-    @NotBlank private final String author;
+    @NotBlank private final String work_name;
+    @NotBlank private final String primary_author;
     private final int year_published;
     private final int word_count;
  }

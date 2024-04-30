@@ -56,7 +56,7 @@ public class BookController {
 
     @GetMapping(path = "byAuthor")
     public List<Book> getBooksByAuthor(@RequestParam Map<String, String> params) {
-        return bookService.getBooksByAuthor(params.get("name"));
+        return bookService.getBooksByAuthor(params.get("author_name"));
     }
 
     @DeleteMapping(path = "{id}")
