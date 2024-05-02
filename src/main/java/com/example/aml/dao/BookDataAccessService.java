@@ -83,15 +83,18 @@ public class BookDataAccessService implements BookDao {
     }
 
     @Override
-    public List<Book> selectBooks(ArrayList<String> bookQueryFilters) {
-        String queryFilters = getQueryFiltersFromArray(bookQueryFilters);
+    public List<Book> selectBooks(
+            ArrayList<String> bookQueryWhereFilters, ArrayList<String> bookQueryOtherFilters) {
+        String queryWhereFilters = getWhereFiltersFromArray(bookQueryWhereFilters);
+        String queryOtherFilters = getOtherFiltersFromOther(bookQueryOtherFilters);
 
         return jdbcTemplate.query(
                 String.format("""
                         SELECT *
                         FROM book
+                        %s
                         %s;
-                        """, queryFilters),
+                        """, queryWhereFilters, queryOtherFilters),
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("work_name"),
@@ -100,7 +103,7 @@ public class BookDataAccessService implements BookDao {
                         resultSet.getInt("word_count")));
     }
 
-    private static String  getQueryFiltersFromArray(ArrayList<String> bookQueryFilters) {
+    private static String getWhereFiltersFromArray(ArrayList<String> bookQueryFilters) {
         StringBuilder bookQueryFiltersAsString = new StringBuilder();
 
         if (bookQueryFilters.size() > 0) {
@@ -112,6 +115,15 @@ public class BookDataAccessService implements BookDao {
             if (i < bookQueryFilters.size() - 1) {
                 bookQueryFiltersAsString.append(" AND ");
             }
+        }
+        return bookQueryFiltersAsString.toString();
+    }
+
+    private static String getOtherFiltersFromOther(ArrayList<String> bookQueryFilters) {
+        StringBuilder bookQueryFiltersAsString = new StringBuilder();
+        for (String bookQueryFilter : bookQueryFilters) {
+            bookQueryFiltersAsString.append(bookQueryFilter);
+            bookQueryFiltersAsString.append('\n');
         }
         return bookQueryFiltersAsString.toString();
     }
