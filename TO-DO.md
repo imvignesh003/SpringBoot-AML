@@ -7,8 +7,10 @@ BACKEND
     - Year Ranges (ex. published between )
 - Add "get" list of books by author functionality
   - Sort by: alphabetically, number of titles, popularity, reviews
+  - Add "sort by" as another parameter
 - Resist the temptation to expand to films, documentaries, music, etc.
   - Expand the app using Book only
+  - Watch SpringBoot tutorials
   - Move to mySQL?
   - Front-end?
 - Add pictures stored in DB (later, this seems more advanced)
@@ -17,6 +19,8 @@ BACKEND
 - work_name -> work_title
 - Fix the capitalization issues 
 - Move TO-DO list to GitHub Issues
+- Look through CS489 notes for project planning/tips
+  - Add these to your TO-DO list
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method

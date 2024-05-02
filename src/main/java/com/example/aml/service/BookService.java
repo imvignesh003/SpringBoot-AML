@@ -27,19 +27,14 @@ public class BookService {
 
     public List<Book> getBooks(Map<String, String> params) {
         ArrayList<String> bookQueryFilters = new ArrayList<>();
+        
+        addBookQueryStringFilters(params, bookQueryFilters, "primary_author");
+        addBookQueryStringFilters(params, bookQueryFilters, "work_name");
 
-        if (params.containsKey("primary_author")) {
-            String authorName = params.get("primary_author");
-            if (!authorName.trim().equals("")) {
-                bookQueryFilters.add(String.format("strpos(primary_author, '%s') > 0", authorName));
-            }
-        }
-        if (params.containsKey("work_name")) {
-            String workName = params.get("work_name");
-            if (!workName.trim().equals("")) {
-                bookQueryFilters.add(String.format("strpos(work_name, '%s') > 0", workName));
-            }
-        }
+        addBookQueryRangeFilters(params, "word_count", bookQueryFilters, true);
+        addBookQueryRangeFilters(params, "word_count", bookQueryFilters, false);
+        addBookQueryRangeFilters(params, "year_published", bookQueryFilters, true);
+        addBookQueryRangeFilters(params, "year_published", bookQueryFilters, false);
 
         return bookDao.selectBooks(bookQueryFilters);
     }
@@ -50,5 +45,32 @@ public class BookService {
 
     public int updateBookById(UUID id, Book book) {
         return bookDao.updateBookById(id, book);
+    }
+
+    private static void addBookQueryStringFilters(
+            Map<String, String> params, ArrayList<String> bookQueryFilters, String columnName) {
+        if (params.containsKey(columnName)) {
+            String authorName = params.get(columnName);
+            if (!authorName.trim().equals("")) {
+                bookQueryFilters.add(String.format("strpos(%s, '%s') > 0", columnName, authorName));
+            }
+        }
+    }
+
+    private static void addBookQueryRangeFilters(
+            Map<String, String> params, String columnName, ArrayList<String> bookQueryFilters, boolean upper) {
+        String keyName = columnName + (upper? "_upper_" : "_lower_") + "limit";
+        if (params.containsKey(keyName)) {
+            String wordCountUpperLimit = params.get(keyName);
+            if (!wordCountUpperLimit.trim().equals("")) {
+                try {
+                    Integer upperLimit = Integer.parseInt(wordCountUpperLimit);
+                    bookQueryFilters.add(
+                            String.format(columnName + (upper? " <= " : " >= ") + "%d", upperLimit));
+                } catch (NumberFormatException ignored) {
+
+                }
+            }
+        }
     }
 }
