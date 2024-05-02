@@ -1,11 +1,27 @@
 # SpringBoot-AML
 
+Introduction
+
+- This REST API will provide CRUD-like operations on a personal database for works of Art, Media, and Literature
+- Currently this project is a very basic storage system (ex. what have I read)?
+- To send requests to this API (how I do it):
+  - Use Postman to request to localhost:8080/api/v1/book
+  - Use JSON Format:
+    {
+    "work_name": "Poetics",
+    "primary_author": "Aristotle",
+    "year_published": -330,
+    "word_count": 11000
+    }
+    */
+
 If everything is setup already:
 - Open the project in an IDE (I've used IntelliJ) and run
 - In Postman:
       - Send requests to **localhost:8080/api/v1/book**
       - Format is **json**
 
+### Setup Instructions
 Set up or re-run docker container:
 - If you've never created the container on your machine:
         - use statement: **docker run --name postgres-spring -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:alpine**

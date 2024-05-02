@@ -11,20 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-// This REST API will provide CRUD-like operations on a personal database for works of Art, Media, and Literature
-// Currently this project is a very basic storage system (ex. what have I read)?
-/*
-To send requests to this API:
-- Use Postman to request to localhost:8080/api/v1/book
-- Use JSON Format:
-    {
-        "name": "Poetics",
-        "author": "Aristotle",
-        "year_published": -330,
-        "word_count": 11000
-    }
- */
-
 @CrossOrigin(origins = "*")
 @RequestMapping("api/v1/book") // The api link
 @RestController // This is a RestAPI -- exposes endpoint for client

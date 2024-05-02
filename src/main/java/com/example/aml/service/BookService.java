@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class BookService {
@@ -64,14 +66,15 @@ public class BookService {
             Map<String, String> params, String columnName, ArrayList<String> bookQueryFilters, boolean upper) {
         String keyName = columnName + (upper? "_upper_" : "_lower_") + "limit";
         if (params.containsKey(keyName)) {
-            String wordCountUpperLimit = params.get(keyName);
-            if (!wordCountUpperLimit.trim().equals("")) {
+            String limitAsString = params.get(keyName);
+            if (!limitAsString.trim().equals("")) {
                 try {
-                    Integer upperLimit = Integer.parseInt(wordCountUpperLimit);
+                    Integer limit = Integer.parseInt(limitAsString);
                     bookQueryFilters.add(
-                            String.format(columnName + (upper? " <= " : " >= ") + "%d", upperLimit));
-                } catch (NumberFormatException ignored) {
-
+                            String.format("%s %s %d", columnName, (upper? " <= " : " >= "), limit));
+                } catch (NumberFormatException err) {
+                    Logger.getAnonymousLogger().log(
+                            Level.INFO, err.getMessage());
                 }
             }
         }
