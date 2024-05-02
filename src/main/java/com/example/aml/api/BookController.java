@@ -42,6 +42,7 @@ public class BookController {
         bookService.addBook(book);
     }
 
+    // GET RID OF THIS ENDPOINT -- only have the filtered one
     @GetMapping // ex. localhost:8080/api/v1/book
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
@@ -54,9 +55,10 @@ public class BookController {
                 .orElse(null);
     }
 
-    @GetMapping(path = "byAuthor")
-    public List<Book> getBooksByAuthor(@RequestParam Map<String, String> params) {
-        return bookService.getBooksByAuthor(params.get("author_name"));
+    // Remove the "path = filter" once this works and you remove the other endpoint
+    @GetMapping(path = "filter")
+    public List<Book> getBooks(@RequestParam Map<String, String> params) {
+        return bookService.getBooks(params);
     }
 
     @DeleteMapping(path = "{id}")

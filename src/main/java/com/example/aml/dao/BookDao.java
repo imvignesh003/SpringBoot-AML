@@ -2,6 +2,7 @@ package com.example.aml.dao;
 
 import com.example.aml.model.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,5 +22,5 @@ public interface BookDao {
 
     Optional<Book> selectBookById(UUID id);
 
-    List<Book> selectBooksByAuthor(String authorName);
+    List<Book> selectBooks(ArrayList<String> bookQueryFilters);
 }

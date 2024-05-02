@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -31,8 +29,23 @@ public class BookService {
         return bookDao.selectBookById(id);
     }
 
-    public List<Book> getBooksByAuthor(String authorName) {
-        return bookDao.selectBooksByAuthor(authorName);
+    public List<Book> getBooks(Map<String, String> params) {
+        ArrayList<String> bookQueryFilters = new ArrayList<>();
+
+        if (params.containsKey("primary_author")) {
+            String authorName = params.get("primary_author");
+            if (!authorName.trim().equals("")) {
+                bookQueryFilters.add(String.format("strpos('%s', primary_author) > 0", authorName));
+            }
+        }
+        if (params.containsKey("work_name")) {
+            String workName = params.get("work_name");
+            if (!workName.trim().equals("")) {
+                bookQueryFilters.add(String.format("strpos('%s', work_name) > 0", workName));
+            }
+        }
+
+        return bookDao.selectBooks(bookQueryFilters);
     }
 
     public int deleteBookById(UUID id) {

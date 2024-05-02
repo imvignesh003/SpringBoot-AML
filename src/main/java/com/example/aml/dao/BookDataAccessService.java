@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -95,22 +95,36 @@ public class BookDataAccessService implements BookDao {
     }
 
     @Override
-    public List<Book> selectBooksByAuthor(String authorName) {
+    public List<Book> selectBooks(ArrayList<String> bookQueryFilters) {
+        String queryFilters = getQueryFiltersFromArray(bookQueryFilters);
+
         return jdbcTemplate.query(
-                """
+                String.format("""
                         SELECT *
                         FROM book
-                        WHERE primary_author = ?;
-                        """,
-                new String[]{authorName},
-                new int[] {
-                        Types.VARCHAR
-                },
+                        %s;
+                        """, queryFilters),
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("work_name"),
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count")));
+    }
+
+    private static String  getQueryFiltersFromArray(ArrayList<String> bookQueryFilters) {
+        StringBuilder bookQueryFiltersAsString = new StringBuilder();
+
+        if (bookQueryFilters.size() > 0) {
+            bookQueryFiltersAsString.append("WHERE ");
+        }
+
+        for (int i = 0; i < bookQueryFilters.size(); ++i) {
+            bookQueryFiltersAsString.append(bookQueryFilters.get(i));
+            if (i < bookQueryFilters.size() - 1) {
+                bookQueryFiltersAsString.append(" AND ");
+            }
+        }
+        return bookQueryFiltersAsString.toString();
     }
 }
