@@ -26,17 +26,20 @@ public class BookService {
     }
 
     public List<Book> getBooks(Map<String, String> params) {
-        ArrayList<String> bookQueryFilters = new ArrayList<>();
+        ArrayList<String> bookQueryWhereFilters = new ArrayList<>();
+        ArrayList<String> bookQueryOtherFilters = new ArrayList<>();
         
-        addBookQueryStringFilters(params, bookQueryFilters, "primary_author");
-        addBookQueryStringFilters(params, bookQueryFilters, "work_name");
+        addBookQueryStringFilters(params, bookQueryWhereFilters, "primary_author");
+        addBookQueryStringFilters(params, bookQueryWhereFilters, "work_name");
 
-        addBookQueryRangeFilters(params, "word_count", bookQueryFilters, true);
-        addBookQueryRangeFilters(params, "word_count", bookQueryFilters, false);
-        addBookQueryRangeFilters(params, "year_published", bookQueryFilters, true);
-        addBookQueryRangeFilters(params, "year_published", bookQueryFilters, false);
+        addBookQueryRangeFilters(params, "word_count", bookQueryWhereFilters, true);
+        addBookQueryRangeFilters(params, "word_count", bookQueryWhereFilters, false);
+        addBookQueryRangeFilters(params, "year_published", bookQueryWhereFilters, true);
+        addBookQueryRangeFilters(params, "year_published", bookQueryWhereFilters, false);
 
-        return bookDao.selectBooks(bookQueryFilters);
+        addSortByCondition(params, bookQueryOtherFilters);
+
+        return bookDao.selectBooks(bookQueryWhereFilters, bookQueryOtherFilters);
     }
 
     public int deleteBookById(UUID id) {
@@ -70,6 +73,18 @@ public class BookService {
                 } catch (NumberFormatException ignored) {
 
                 }
+            }
+        }
+    }
+
+    private static void addSortByCondition(
+            Map<String, String> params, ArrayList<String> bookQueryOtherFilters) {
+        if (params.containsKey("sort_by")) {
+            String columnName = params.get("sort_by");
+            if (!columnName.trim().equals("")) {
+                String order = Objects.requireNonNullElse(params.get("sorting_order"), ""); // ASC or DESC
+                bookQueryOtherFilters.add(
+                        String.format("ORDER BY %s %s", columnName, order));
             }
         }
     }

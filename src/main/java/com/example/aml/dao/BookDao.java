@@ -20,5 +20,5 @@ public interface BookDao {
 
     Optional<Book> selectBookById(UUID id);
 
-    List<Book> selectBooks(ArrayList<String> bookQueryFilters);
+    List<Book> selectBooks(ArrayList<String> bookQueryWhereFilters, ArrayList<String> bookQueryOtherFilters);
 }

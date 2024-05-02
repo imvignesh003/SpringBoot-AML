@@ -15,6 +15,7 @@ BACKEND
 - Move TO-DO list to GitHub Issues
 - Look through CS489 notes for project planning/tips
   - Add these to your TO-DO list
+- SonarQube?
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
