@@ -31,13 +31,13 @@ public class BookService {
         if (params.containsKey("primary_author")) {
             String authorName = params.get("primary_author");
             if (!authorName.trim().equals("")) {
-                bookQueryFilters.add(String.format("strpos('%s', primary_author) > 0", authorName));
+                bookQueryFilters.add(String.format("strpos(primary_author, '%s') > 0", authorName));
             }
         }
         if (params.containsKey("work_name")) {
             String workName = params.get("work_name");
             if (!workName.trim().equals("")) {
-                bookQueryFilters.add(String.format("strpos('%s', work_name) > 0", workName));
+                bookQueryFilters.add(String.format("strpos(work_name, '%s') > 0", workName));
             }
         }
 

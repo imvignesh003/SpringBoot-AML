@@ -15,6 +15,8 @@ BACKEND
 - Remove specific "byAuthor", etc. endpoint paths
   - Instead, have it as another parameter, then make the queries according to that (logic in the service module)
 - work_name -> work_title
+- Fix the capitalization issues 
+- Move TO-DO list to GitHub Issues
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
