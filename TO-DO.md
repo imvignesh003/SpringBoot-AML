@@ -1,9 +1,6 @@
 TO-DO List
 
 BACKEND
-- Add "get" list of books by author functionality
-  - Sort by: alphabetically, number of titles, popularity, reviews
-  - Add "sort by" as another parameter
 - Resist the temptation to expand to films, documentaries, music, etc.
   - Expand the app using Book only
   - Watch SpringBoot tutorials
@@ -16,6 +13,7 @@ BACKEND
 - Look through CS489 notes for project planning/tips
   - Add these to your TO-DO list
 - SonarQube?
+- Look through SQL notes, see what other changes you can make
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
@@ -32,3 +30,12 @@ FRONT-END
 LONG-TERM
 - Write Unit and Integration tests
 - Configure with some of these: https://github.com/Adam1302/SpringBoot-AML/actions/new
+- Accounts (Username and Password) + "My Books" Page
+
+VISION
+- I'd like this to be the centre for discussions and resources on Art, Media, Literature
+  - Experts can write about topics, host discussions, etc.
+    - Currently most "discussions" are scarce and out of sight, with many brilliant minds in low places, speaking to small audiences. This site can change that.
+    - ex. Michael Sugrue Plato discussions
+- Scheduled discussions, forums, pages for each work
+
