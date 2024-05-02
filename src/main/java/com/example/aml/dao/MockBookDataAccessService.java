@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("TemporaryDAO") // @Component also works -- this tells the program that this exists
+@Repository("temporaryDAO") // @Component also works -- this tells the program that this exists
 public class MockBookDataAccessService implements BookDao {
 
     private static List<Book> bookDB = new ArrayList<>();

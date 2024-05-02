@@ -31,6 +31,7 @@ LONG-TERM
 - Write Unit and Integration tests
 - Configure with some of these: https://github.com/Adam1302/SpringBoot-AML/actions/new
 - Accounts (Username and Password) + "My Books" Page
+- GitHub action with SonarCloud (extra steps needed for Maven)
 
 VISION
 - I'd like this to be the centre for discussions and resources on Art, Media, Literature

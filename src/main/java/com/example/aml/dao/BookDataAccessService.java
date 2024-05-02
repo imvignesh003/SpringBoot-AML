@@ -106,7 +106,7 @@ public class BookDataAccessService implements BookDao {
     private static String getWhereFiltersFromArray(ArrayList<String> bookQueryFilters) {
         StringBuilder bookQueryFiltersAsString = new StringBuilder();
 
-        if (bookQueryFilters.size() > 0) {
+        if (!bookQueryFilters.isEmpty()) {
             bookQueryFiltersAsString.append("WHERE ");
         }
 
