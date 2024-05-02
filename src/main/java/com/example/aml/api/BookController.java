@@ -42,12 +42,6 @@ public class BookController {
         bookService.addBook(book);
     }
 
-    // GET RID OF THIS ENDPOINT -- only have the filtered one
-    @GetMapping // ex. localhost:8080/api/v1/book
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
-    }
-
     @GetMapping(path = "{id}") // Basically, we add the path (in this case, the ID) to the link
     // ex. localhost:8080/api/v1/book/83e0eb8e-7c42-42a8-a7ab-d179a4b1cf24
     public Book selectBookById(@PathVariable("id") UUID id) {
@@ -56,7 +50,7 @@ public class BookController {
     }
 
     // Remove the "path = filter" once this works and you remove the other endpoint
-    @GetMapping(path = "filter")
+    @GetMapping
     public List<Book> getBooks(@RequestParam Map<String, String> params) {
         return bookService.getBooks(params);
     }

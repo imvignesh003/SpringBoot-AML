@@ -14,8 +14,6 @@ public interface BookDao {
         return insertBook(id, book);
     }
 
-    List<Book> selectAllBooks();
-
     int deleteBookById(UUID id);
 
     int updateBookById(UUID id, Book book);

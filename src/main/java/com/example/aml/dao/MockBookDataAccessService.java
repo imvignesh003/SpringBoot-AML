@@ -25,11 +25,6 @@ public class MockBookDataAccessService implements BookDao {
     }
 
     @Override
-    public List<Book> selectAllBooks() {
-        return bookDB;
-    }
-
-    @Override
     public int deleteBookById(UUID id) {
         Optional<Book> book = selectBookById(id);
         if (book.isPresent()) {

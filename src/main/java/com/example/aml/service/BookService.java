@@ -21,10 +21,6 @@ public class BookService {
         return bookDao.insertBook(book);
     }
 
-    public List<Book> getAllBooks() {
-        return bookDao.selectAllBooks();
-    }
-
     public Optional<Book> selectBookById(UUID id) {
         return bookDao.selectBookById(id);
     }

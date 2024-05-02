@@ -36,18 +36,6 @@ public class BookDataAccessService implements BookDao {
     }
 
     @Override
-    public List<Book> selectAllBooks() {
-        return jdbcTemplate.query(
-                "SELECT * FROM book",
-                (resultSet, i) -> new Book(
-                        UUID.fromString(resultSet.getString("id")),
-                        resultSet.getString("work_name"),
-                        resultSet.getString("primary_author"),
-                        resultSet.getInt("year_published"),
-                        resultSet.getInt("word_count")));
-    }
-
-    @Override
     public int deleteBookById(UUID id) {
         var statement = """
                 DELETE FROM book
