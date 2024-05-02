@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -23,16 +21,22 @@ public class BookService {
         return bookDao.insertBook(book);
     }
 
-    public List<Book> getAllBooks() {
-        return bookDao.selectAllBooks();
-    }
-
     public Optional<Book> selectBookById(UUID id) {
         return bookDao.selectBookById(id);
     }
 
-    public List<Book> getBooksByAuthor(String authorName) {
-        return bookDao.selectBooksByAuthor(authorName);
+    public List<Book> getBooks(Map<String, String> params) {
+        ArrayList<String> bookQueryFilters = new ArrayList<>();
+        
+        addBookQueryStringFilters(params, bookQueryFilters, "primary_author");
+        addBookQueryStringFilters(params, bookQueryFilters, "work_name");
+
+        addBookQueryRangeFilters(params, "word_count", bookQueryFilters, true);
+        addBookQueryRangeFilters(params, "word_count", bookQueryFilters, false);
+        addBookQueryRangeFilters(params, "year_published", bookQueryFilters, true);
+        addBookQueryRangeFilters(params, "year_published", bookQueryFilters, false);
+
+        return bookDao.selectBooks(bookQueryFilters);
     }
 
     public int deleteBookById(UUID id) {
@@ -41,5 +45,32 @@ public class BookService {
 
     public int updateBookById(UUID id, Book book) {
         return bookDao.updateBookById(id, book);
+    }
+
+    private static void addBookQueryStringFilters(
+            Map<String, String> params, ArrayList<String> bookQueryFilters, String columnName) {
+        if (params.containsKey(columnName)) {
+            String authorName = params.get(columnName);
+            if (!authorName.trim().equals("")) {
+                bookQueryFilters.add(String.format("strpos(%s, '%s') > 0", columnName, authorName));
+            }
+        }
+    }
+
+    private static void addBookQueryRangeFilters(
+            Map<String, String> params, String columnName, ArrayList<String> bookQueryFilters, boolean upper) {
+        String keyName = columnName + (upper? "_upper_" : "_lower_") + "limit";
+        if (params.containsKey(keyName)) {
+            String wordCountUpperLimit = params.get(keyName);
+            if (!wordCountUpperLimit.trim().equals("")) {
+                try {
+                    Integer upperLimit = Integer.parseInt(wordCountUpperLimit);
+                    bookQueryFilters.add(
+                            String.format(columnName + (upper? " <= " : " >= ") + "%d", upperLimit));
+                } catch (NumberFormatException ignored) {
+
+                }
+            }
+        }
     }
 }
