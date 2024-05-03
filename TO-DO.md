@@ -6,13 +6,8 @@ BACKEND
   - Watch SpringBoot tutorials
   - Move to mySQL?
   - Front-end?
-- Add pictures stored in DB (later, this seems more advanced)
-- work_name -> work_title
-- Fix the capitalization issues
-- Move TO-DO list to GitHub Issues
 - Look through CS489 notes for project planning/tips
   - Add these to your TO-DO list
-- SonarQube?
 - Look through SQL notes, see what other changes you can make
 
 FRONT-END
@@ -25,6 +20,8 @@ FRONT-END
   - ex. ranges for word count, year published
   - Design it like one of those Fifa Database searches (i.e., with searches and filters)
 - Add sorting options on the table
+- work_name -> work_title
+- Pictures
 
 
 LONG-TERM
