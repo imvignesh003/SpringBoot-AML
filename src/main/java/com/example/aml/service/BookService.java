@@ -1,12 +1,18 @@
 package com.example.aml.service;
 
 import com.example.aml.dao.BookDao;
+import com.example.aml.model.AssociatedImage;
 import com.example.aml.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,6 +56,14 @@ public class BookService {
 
     public int updateBookById(UUID id, Book book) {
         return bookDao.updateBookById(id, book);
+    }
+
+    public int insertImageForBook(UUID id, byte[] imageAsByteArray) {
+        return bookDao.insertImage(id, imageAsByteArray);
+    }
+
+    public AssociatedImage getImageForBook(UUID id) {
+        return bookDao.getImageForBook(id);
     }
 
     private static void addBookQueryStringFilters(

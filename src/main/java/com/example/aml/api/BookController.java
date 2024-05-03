@@ -1,11 +1,21 @@
 package com.example.aml.api;
 
+import com.example.aml.model.AssociatedImage;
 import com.example.aml.model.Book;
 import com.example.aml.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -50,5 +60,17 @@ public class BookController {
     public int updateBookById(@PathVariable("id") UUID id,
                               @NotNull @Valid @RequestBody Book book) {
         return bookService.updateBookById(id, book);
+    }
+
+    @GetMapping(path = "image/{id}")
+    public AssociatedImage getImage(@PathVariable("id") UUID id) {
+        return bookService.getImageForBook(id);
+    }
+
+    @PutMapping(path = "image/{id}")
+    public int insertImageForBook(
+            @PathVariable("id") UUID id,
+            @NotNull @Valid @RequestBody byte[] imageAsByteArray) {
+        return bookService.insertImageForBook(id, imageAsByteArray);
     }
 }
