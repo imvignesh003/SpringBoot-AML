@@ -32,7 +32,7 @@ public class BookService {
         ArrayList<String> bookQueryOtherFilters = new ArrayList<>();
         
         addBookQueryStringFilters(params, bookQueryWhereFilters, "primary_author");
-        addBookQueryStringFilters(params, bookQueryWhereFilters, "work_name");
+        addBookQueryStringFilters(params, bookQueryWhereFilters, "work_title");
 
         addBookQueryRangeFilters(params, "word_count", bookQueryWhereFilters, true);
         addBookQueryRangeFilters(params, "word_count", bookQueryWhereFilters, false);

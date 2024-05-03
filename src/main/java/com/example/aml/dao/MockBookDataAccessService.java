@@ -17,7 +17,7 @@ public class MockBookDataAccessService implements BookDao {
     public int insertBook(UUID id, Book book) {
         bookDB.add(new Book(
                 id,
-                book.getWork_name(),
+                book.getWork_title(),
                 book.getPrimary_author(),
                 book.getYear_published(),
                 book.getWord_count()));
@@ -43,7 +43,7 @@ public class MockBookDataAccessService implements BookDao {
                             if (index >= 0) {
                                 bookDB.set(index, new Book(
                                         id,
-                                        book.getWork_name(),
+                                        book.getWork_title(),
                                         book.getPrimary_author(),
                                         book.getYear_published(),
                                         book.getWord_count()
