@@ -57,7 +57,7 @@ public class BookService {
         if (params.containsKey(columnName)) {
             String authorName = params.get(columnName);
             if (!authorName.trim().equals("")) {
-                bookQueryFilters.add(String.format("strpos(%s, '%s') > 0", columnName, authorName));
+                bookQueryFilters.add(String.format("strpos(%s::citext, '%s'::citext) > 0", columnName, authorName));
             }
         }
     }

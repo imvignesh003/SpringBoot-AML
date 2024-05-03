@@ -35,6 +35,7 @@ Setup and modify database within Postgres (with UUID support):
 - **CREATE DATABASE ---db-name---;**
 - **\c ---db-name---;**
 - **CREATE EXTENSION "uuid-ossp";**
+- **CREATE EXTENSION citext;**
 - **SELECT uuid_generate_v4();**
 - (to add columns) **ALTER TABLE ---table-name--- ---alteration--- ---column-name--- ---data-type---;**
 
