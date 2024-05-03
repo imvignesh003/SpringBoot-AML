@@ -23,13 +23,13 @@ public class BookDataAccessService implements BookDao {
     @Override
     public int insertBook(UUID id, Book book) {
         var statement = """
-                INSERT INTO book(id, work_name, primary_author, year_published, word_count)
+                INSERT INTO book(id, work_title, primary_author, year_published, word_count)
                 VALUES (?, ?, ?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 statement,
                 id,
-                book.getWork_name(),
+                book.getWork_title(),
                 book.getPrimary_author(),
                 book.getYear_published(),
                 book.getWord_count());
@@ -52,7 +52,7 @@ public class BookDataAccessService implements BookDao {
                 UPDATE book
                 SET
                     id = ?,
-                    work_name = ?,
+                    work_title = ?,
                     primary_author = ?,
                     year_published = ?,
                     word_count = ?
@@ -61,7 +61,7 @@ public class BookDataAccessService implements BookDao {
         return jdbcTemplate.update(
                 statement,
                 id,
-                book.getWork_name(),
+                book.getWork_title(),
                 book.getPrimary_author(),
                 book.getYear_published(),
                 book.getWord_count(),
@@ -76,7 +76,7 @@ public class BookDataAccessService implements BookDao {
                 new Object[]{id},
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
-                        resultSet.getString("work_name"),
+                        resultSet.getString("work_title"),
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count"))));
@@ -97,7 +97,7 @@ public class BookDataAccessService implements BookDao {
                         """, queryWhereFilters, queryOtherFilters),
                 (resultSet, i) -> new Book(
                         UUID.fromString(resultSet.getString("id")),
-                        resultSet.getString("work_name"),
+                        resultSet.getString("work_title"),
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count")));

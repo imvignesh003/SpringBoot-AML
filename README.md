@@ -8,7 +8,7 @@ Introduction
   - Use Postman to request to localhost:8080/api/v1/book
   - Use JSON Format:
     {
-    "work_name": "Poetics",
+    "work_title": "Poetics",
     "primary_author": "Aristotle",
     "year_published": -330,
     "word_count": 11000
