@@ -9,11 +9,20 @@ BACKEND
   - Front-end?
 - Look through CS489 notes for project planning/tips
   - Add these to your TO-DO list
-- Look through SQL notes, see what other changes you can make
-- Add "credit" column (string) to Pictures table
-- Fix Base64 bug in pictures
-  - Currently, I've had to manually insert base64 encodings into the picture DB
-  - The issue is in the decoding...
+- Add "credit", "description" columns (string) to Pictures table
+- Create Excel file full of entries
+  - then write a script that can send each row as a PUT request
+  - or, if that's too hard, write a script that will convert the Excel file to JSON where the first row represents headers
+- Create backup tables that you can manually copy to so you don't lose your data when editing the frontend anymore
+- Add column to table BOOK: Genres
+  - Leaning towards storing these as a single string (list of genres)
+  - Somewhere else (probably in Spring or React), I should have a list of allowed genres
+    - In the future, we can add genres to books using POST requests
+- Scraping Tool
+  - Go through each book on the page and get info
+  - Go through each page
+  - Fix the word count and year published
+    - Currently, the year published only has numbers of the date. This is a problem if a full date is provided (ex. April 25, 1797)
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
@@ -29,6 +38,7 @@ FRONT-END
 - Pictures
   - Better Display
   - Add ability to upload an image (png or jpeg), convert it to a byte array, and api PUT
+- Move interfaces into separate utils/interfaces functions
 
 
 LONG-TERM
@@ -43,4 +53,6 @@ VISION
     - Currently most "discussions" are scarce and out of sight, with many brilliant minds in low places, speaking to small audiences. This site can change that.
     - ex. Michael Sugrue Plato discussions
 - Scheduled discussions, forums, pages for each work
+- This site is awesome: https://book.io/book/beyond-good-and-evil/
+  - Look at how they include AI-generated cover art based on the work -> very cool
 
