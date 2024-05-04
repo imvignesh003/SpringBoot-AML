@@ -70,7 +70,7 @@ public class BookController {
     @PutMapping(path = "image/{id}")
     public int insertImageForBook(
             @PathVariable("id") UUID id,
-            @NotNull @Valid @RequestBody byte[] imageAsByteArray) {
-        return bookService.insertImageForBook(id, imageAsByteArray);
+            @Valid @RequestBody AssociatedImage image) {
+        return bookService.insertImageForBook(id, image.getPicture());
     }
 }

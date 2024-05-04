@@ -26,6 +26,8 @@ FRONT-END
 - Add sorting options on the table
 - work_name -> work_title
 - Pictures
+  - Better Display
+  - Add ability to upload an image (png or jpeg), convert it to a byte array, and api PUT
 
 
 LONG-TERM

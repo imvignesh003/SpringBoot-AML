@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -63,13 +62,13 @@ public class BookDataAccessService implements BookDao {
                          ON b.picture_id = p.id
                          WHERE b.id = '%s';
                         """, bookId.toString()),
-                    (resultSet, i) -> new AssociatedImage(
+                    (resultSet, i) -> {
+                        return new AssociatedImage(
                                 UUID.fromString(resultSet.getString("id")),
-                                Base64.getDecoder().decode(
-                                        new String(resultSet.getBytes("picture"))
-                                                .getBytes(StandardCharsets.UTF_8)
-                                )
-                ));
+                                Base64.getDecoder().decode(resultSet.getBytes("picture"))
+                        );
+                    }
+                );
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(
                     Level.INFO, e.toString());
