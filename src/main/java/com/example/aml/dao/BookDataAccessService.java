@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Repository("postgres") //uses a postgres DB
 public class BookDataAccessService implements BookDao {
@@ -32,7 +36,7 @@ public class BookDataAccessService implements BookDao {
         int pictureIdStatement = jdbcTemplate.update(
                 pictureStatement,
                 pictureId,
-                imageAsByteArray
+                Base64.getEncoder().encode(imageAsByteArray)
         );
         int bookAddPictureStatement = jdbcTemplate.update(
                 """
@@ -58,12 +62,17 @@ public class BookDataAccessService implements BookDao {
                          JOIN pictures p
                          ON b.picture_id = p.id
                          WHERE b.id = '%s';
-                        """, bookId),
+                        """, bookId.toString()),
                     (resultSet, i) -> new AssociatedImage(
-                            UUID.fromString(resultSet.getString("id")),
-                            resultSet.getBytes("picture"))
-            );
+                                UUID.fromString(resultSet.getString("id")),
+                                Base64.getDecoder().decode(
+                                        new String(resultSet.getBytes("picture"))
+                                                .getBytes(StandardCharsets.UTF_8)
+                                )
+                ));
         } catch (Exception e) {
+            Logger.getAnonymousLogger().log(
+                    Level.INFO, e.toString());
             image = jdbcTemplate.queryForObject(
                     String.format("""
                         SELECT p.id, p.picture
@@ -72,9 +81,10 @@ public class BookDataAccessService implements BookDao {
                         """, BookConstants.MISSING_IMAGE_ID),
                     (resultSet, i) -> new AssociatedImage(
                             UUID.fromString(resultSet.getString("id")),
-                            resultSet.getBytes("picture"))
+                            Base64.getDecoder().decode(resultSet.getBytes("picture")))
             );
         }
+
         return image;
     }
 

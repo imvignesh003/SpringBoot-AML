@@ -10,6 +10,9 @@ BACKEND
   - Add these to your TO-DO list
 - Look through SQL notes, see what other changes you can make
 - Add "credit" column (string) to Pictures table
+- Fix Base64 bug in pictures
+  - Currently, I've had to manually insert base64 encodings into the picture DB
+  - The issue is in the decoding...
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
