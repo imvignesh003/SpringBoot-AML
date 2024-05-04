@@ -1,5 +1,6 @@
 package com.example.aml.dao;
 
+import com.example.aml.model.AssociatedImage;
 import com.example.aml.model.Book;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,8 @@ public class MockBookDataAccessService implements BookDao {
                 book.getWork_title(),
                 book.getPrimary_author(),
                 book.getYear_published(),
-                book.getWord_count()));
+                book.getWord_count(),
+                null));
         return 1;
     }
 
@@ -46,7 +48,8 @@ public class MockBookDataAccessService implements BookDao {
                                         book.getWork_title(),
                                         book.getPrimary_author(),
                                         book.getYear_published(),
-                                        book.getWord_count()
+                                        book.getWord_count(),
+                                        null
                                 )); // if you need to modify this, create a new Book constructor
                                 return 1;
                             }
@@ -67,5 +70,16 @@ public class MockBookDataAccessService implements BookDao {
         // not maintained
         return bookDB.stream().filter(
                 book -> book.getPrimary_author().equals("")).toList();
+    }
+
+    @Override
+    public AssociatedImage getImageForBook(UUID id) {
+        return null;
+    }
+
+    @Override
+    public int insertImage(UUID bookId, byte[] imageAsByteArray) {
+        // not maintained
+        return 0;
     }
 }

@@ -9,6 +9,10 @@ BACKEND
 - Look through CS489 notes for project planning/tips
   - Add these to your TO-DO list
 - Look through SQL notes, see what other changes you can make
+- Add "credit" column (string) to Pictures table
+- Fix Base64 bug in pictures
+  - Currently, I've had to manually insert base64 encodings into the picture DB
+  - The issue is in the decoding...
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
@@ -22,6 +26,8 @@ FRONT-END
 - Add sorting options on the table
 - work_name -> work_title
 - Pictures
+  - Better Display
+  - Add ability to upload an image (png or jpeg), convert it to a byte array, and api PUT
 
 
 LONG-TERM
