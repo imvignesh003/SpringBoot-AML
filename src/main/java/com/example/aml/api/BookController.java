@@ -45,6 +45,12 @@ public class BookController {
                 .orElse(null);
     }
 
+    @GetMapping(path = "byNameAndAuthor") // Basically, we add the path (in this case, the ID) to the link
+    public Book selectBookByNameAndAuthor(@RequestParam Map<String, String> params) {
+        return bookService.selectBookByNameAndAuthor(params)
+                .orElse(null);
+    }
+
     // Remove the "path = filter" once this works and you remove the other endpoint
     @GetMapping
     public List<Book> getBooks(@RequestParam Map<String, String> params) {

@@ -33,6 +33,13 @@ public class BookService {
         return bookDao.selectBookById(id);
     }
 
+    public Optional<Book> selectBookByNameAndAuthor(Map<String, String> params) {
+        return bookDao.selectBookByNameAndAuthor(
+                params.get("work_title"),
+                params.get("primary_author")
+        );
+    }
+
     public List<Book> getBooks(Map<String, String> params) {
         ArrayList<String> bookQueryWhereFilters = new ArrayList<>();
         ArrayList<String> bookQueryOtherFilters = new ArrayList<>();

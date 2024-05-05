@@ -151,6 +151,24 @@ public class BookDataAccessService implements BookDao {
     }
 
     @Override
+    public Optional<Book> selectBookByNameAndAuthor(String workTitle, String primaryAuthor) {
+        return Optional.ofNullable(
+                jdbcTemplate.queryForObject(
+                        String.format("""
+                        SELECT *
+                        FROM book
+                        WHERE work_title = '%s' AND primary_author = '%s'
+                        """, workTitle, primaryAuthor),
+                        (resultSet, i) -> new Book(
+                                UUID.fromString(resultSet.getString("id")),
+                                resultSet.getString("work_title"),
+                                resultSet.getString("primary_author"),
+                                resultSet.getInt("year_published"),
+                                resultSet.getInt("word_count"),
+                                null)));
+    }
+
+    @Override
     public List<Book> selectBooks(
             ArrayList<String> bookQueryWhereFilters, ArrayList<String> bookQueryOtherFilters) {
         String queryWhereFilters = getWhereFiltersFromArray(bookQueryWhereFilters);
