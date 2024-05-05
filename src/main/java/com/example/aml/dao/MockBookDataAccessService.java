@@ -82,4 +82,10 @@ public class MockBookDataAccessService implements BookDao {
         // not maintained
         return 0;
     }
+
+    @Override
+    public Optional<Book> selectBookByNameAndAuthor(String workTitle, String primaryAuthor) {
+        return bookDB.stream()
+                .findFirst();
+    }
 }

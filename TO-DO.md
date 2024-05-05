@@ -1,6 +1,7 @@
 TO-DO List
 
 BACKEND
+- BUG: when there is an apostrophe in the book name or author name
 - Resist the temptation to expand to films, documentaries, music, etc.
   - Expand the app using Book only
   - Watch SpringBoot tutorials

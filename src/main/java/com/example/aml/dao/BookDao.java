@@ -26,4 +26,6 @@ public interface BookDao {
     List<Book> selectBooks(ArrayList<String> bookQueryWhereFilters, ArrayList<String> bookQueryOtherFilters);
 
     AssociatedImage getImageForBook(UUID id);
+
+    Optional<Book> selectBookByNameAndAuthor(String workTitle, String primaryAuthor);
 }
