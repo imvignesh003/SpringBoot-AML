@@ -23,6 +23,7 @@ BACKEND
   - Go through each page
   - Fix the word count and year published
     - Currently, the year published only has numbers of the date. This is a problem if a full date is provided (ex. April 25, 1797)
+- Add GET request with work title and author name
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
@@ -55,4 +56,7 @@ VISION
 - Scheduled discussions, forums, pages for each work
 - This site is awesome: https://book.io/book/beyond-good-and-evil/
   - Look at how they include AI-generated cover art based on the work -> very cool
+- I found this site now which is basically the book version of my goal: https://openlibrary.org
+  - I intend to try to start with something like this, but improve on it
+    - Discussions groups, etc.
 
