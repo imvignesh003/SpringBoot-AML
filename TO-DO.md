@@ -14,6 +14,8 @@ BACKEND
   - then write a script that can send each row as a PUT request
   - or, if that's too hard, write a script that will convert the Excel file to JSON where the first row represents headers
 - Create backup tables that you can manually copy to so you don't lose your data when editing the frontend anymore
+  - Regularly run a command that deletes pictures that aren't referenced in Book
+  - Don't worry, if anything ever happens you always have your scripts to re-run
 - Add column to table BOOK: Genres
   - Leaning towards storing these as a single string (list of genres)
   - Somewhere else (probably in Spring or React), I should have a list of allowed genres
