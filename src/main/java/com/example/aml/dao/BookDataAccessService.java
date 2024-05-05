@@ -147,7 +147,7 @@ public class BookDataAccessService implements BookDao {
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count"),
-                        null)));
+                        (UUID) resultSet.getObject("picture_id"))));
     }
 
     @Override
@@ -165,7 +165,7 @@ public class BookDataAccessService implements BookDao {
                                 resultSet.getString("primary_author"),
                                 resultSet.getInt("year_published"),
                                 resultSet.getInt("word_count"),
-                                null)));
+                                (UUID) resultSet.getObject("picture_id"))));
     }
 
     @Override
@@ -187,7 +187,7 @@ public class BookDataAccessService implements BookDao {
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count"),
-                        null));
+                        (UUID) resultSet.getObject("picture_id")));
     }
 
     private static String getWhereFiltersFromArray(ArrayList<String> bookQueryFilters) {

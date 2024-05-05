@@ -16,6 +16,7 @@ BACKEND
 - Create backup tables that you can manually copy to so you don't lose your data when editing the frontend anymore
   - Regularly run a command that deletes pictures that aren't referenced in Book
   - Don't worry, if anything ever happens you always have your scripts to re-run
+  - https://stackoverflow.com/questions/3682866/how-to-create-a-backup-of-a-single-table-in-a-postgres-database
 - Add column to table BOOK: Genres
   - Leaning towards storing these as a single string (list of genres)
   - Somewhere else (probably in Spring or React), I should have a list of allowed genres
@@ -25,7 +26,11 @@ BACKEND
   - Go through each page
   - Fix the word count and year published
     - Currently, the year published only has numbers of the date. This is a problem if a full date is provided (ex. April 25, 1797)
-- Add GET request with work title and author name
+- Change scripts to check whether a book already has a picture
+  - If it does, then don't add one
+  - You'll need to add a GET request (boolean: hasPicture)
+  - OR: use the current GET request and its pictureID property
+    - is it null or not?
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
@@ -48,7 +53,12 @@ LONG-TERM
 - Write Unit and Integration tests
 - Configure with some of these: https://github.com/Adam1302/SpringBoot-AML/actions/new
 - Accounts (Username and Password) + "My Books" Page
+- CS489: Project Setup and Improvement Ideas
+  - Notes
+  - Always use for PRs: https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
 - GitHub action with SonarCloud (extra steps needed for Maven)
+  - https://github.com/SonarSource/sonarcloud-github-action
+  - https://community.sonarsource.com/t/github-actions-setup-for-maven-and-ts/46584
 
 VISION
 - I'd like this to be the centre for discussions and resources on Art, Media, Literature

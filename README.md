@@ -1,6 +1,6 @@
 # SpringBoot-AML
 
-Introduction
+### Introduction
 
 - This REST API will provide CRUD-like operations on a personal database for works of Art, Media, and Literature
 - Currently this project is a very basic storage system (ex. what have I read)?
@@ -14,6 +14,12 @@ Introduction
     "word_count": 11000
     }
     */
+
+### Project Info
+- External APIs used:
+  - https://github.com/w3slley/bookcover-api
+
+### Run Instructions
 
 If everything is setup already:
 - Open the project in an IDE (I've used IntelliJ) and run
