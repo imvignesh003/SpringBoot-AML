@@ -1,6 +1,10 @@
 import csv
 import requests
 
+# POSTs each row in a CSV file
+# Use this after scraping info into a CSV
+# To-DO: Either here or in the backend, make sure you are not duplicating existing values
+
 def send_post_requests():
     csv_file = 'books.csv'
     endpoint = 'http://localhost:8080/api/v1/book'

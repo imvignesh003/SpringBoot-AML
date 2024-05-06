@@ -31,6 +31,11 @@ BACKEND
   - You'll need to add a GET request (boolean: hasPicture)
   - OR: use the current GET request and its pictureID property
     - is it null or not?
+- Define Constants for the column names of our tables
+- On POST requests, guard against duplicate entries
+- Look into automatically adding an image when we add a book
+  - i.e., when I add a book, we automatically search for and add the image
+  - How can we call the API? And from where? Front-end or back-end?
 
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
@@ -47,18 +52,23 @@ FRONT-END
   - Better Display
   - Add ability to upload an image (png or jpeg), convert it to a byte array, and api PUT
 - Move interfaces into separate utils/interfaces functions
+- BUG: can't enter negative numbers for year published
+  - also can't enter a 0
 
 
 LONG-TERM
 - Write Unit and Integration tests
 - Configure with some of these: https://github.com/Adam1302/SpringBoot-AML/actions/new
 - Accounts (Username and Password) + "My Books" Page
+  - Be careful: do NOT do this too early
 - CS489: Project Setup and Improvement Ideas
   - Notes
   - Always use for PRs: https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
 - GitHub action with SonarCloud (extra steps needed for Maven)
   - https://github.com/SonarSource/sonarcloud-github-action
   - https://community.sonarsource.com/t/github-actions-setup-for-maven-and-ts/46584
+- GitHub Actions: run Python scripts for pictures, etc.
+  - Once a week, for instance
 
 VISION
 - I'd like this to be the centre for discussions and resources on Art, Media, Literature
