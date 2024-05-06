@@ -54,6 +54,7 @@ FRONT-END
 - Move interfaces into separate utils/interfaces functions
 - BUG: can't enter negative numbers for year published
   - also can't enter a 0
+- BUG: When adding a book, we need to empty the input boxes
 
 
 LONG-TERM

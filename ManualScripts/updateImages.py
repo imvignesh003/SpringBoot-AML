@@ -3,8 +3,27 @@ import csv
 import requests
 import base64
 
-# Uploads all book covers from a CSV file
-# To use this, you need a CSV file in the same directory called 'existingBooksInTable.csv'
+# Uploads all book covers
+### First, we GET a list of the books. Then, for each book that doesn't have an associated picture, we issue a PUT request for any picture we can find using the bookcover API.
+
+def book_table_to_csv(csv_file):
+    endpoint = 'http://localhost:8080/api/v1/book'
+
+    response = requests.get(endpoint)
+
+    if response.status_code == 200:
+        book_list = response.json()
+
+        with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=['id', 'work_title', 'primary_author', 'year_published', 'word_count', 'picture'])
+            writer.writeheader()
+
+            for book in book_list:
+                writer.writerow(book)
+
+        print(f"CSV file '{csv_file}' has been created successfully.")
+    else:
+        print("Failed to fetch data from the endpoint.")
 
 def convert_to_base64(image_path):
     with open(image_path, 'rb') as file:
@@ -17,6 +36,8 @@ def upload_book_covers():
     cover_endpoint = 'http://bookcover.longitood.com/bookcover'
     image_endpoint_template = 'http://localhost:8080/api/v1/book/image/{}'
 
+    book_table_to_csv(csv_file)
+
     with open(csv_file, mode='r', newline='', encoding='utf-8') as file:
         reader = csv.DictReader(file)
 
@@ -24,7 +45,7 @@ def upload_book_covers():
             work_id = row['id']
             work_title = row['work_title']
             author_name = row['primary_author']
-            picture_id = row['picture_id']
+            picture_id = row['picture']
 
             # Make a PUT request to upload the image
             if work_id and not picture_id:
