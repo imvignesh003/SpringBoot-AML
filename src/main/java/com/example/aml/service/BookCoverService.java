@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 @Service
 public class BookCoverService {
 
-    private final String BOOK_COVER_API_URL = "http://bookcover.longitood.com/bookcover";
+    private static final String BOOK_COVER_API_URL = "http://bookcover.longitood.com/bookcover";
 
     public String getBookCoverURL(String bookTitle, String authorName) {
         RestTemplate restTemplate = new RestTemplate();
@@ -38,8 +38,7 @@ public class BookCoverService {
 
     public byte[] downloadImage(String imageUrl) {
         RestTemplate restTemplate = new RestTemplate();
-        byte[] imageBytes = restTemplate.getForObject(imageUrl, byte[].class);
-        return imageBytes;
+        return restTemplate.getForObject(imageUrl, byte[].class);
     }
 }
 
