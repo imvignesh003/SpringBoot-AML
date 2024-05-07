@@ -19,14 +19,29 @@ import java.util.logging.Logger;
 @Service
 public class BookService {
     private final BookDao bookDao;
+    private final BookCoverService bookCoverService;
 
     @Autowired // constructor will run automatically with parameters stored in Spring reference area
-    public BookService(@Qualifier("postgres") BookDao bookDao) {
+    public BookService(@Qualifier("postgres") BookDao bookDao,
+                       BookCoverService bookCoverService) {
         this.bookDao = bookDao;
+        this.bookCoverService = bookCoverService;
     }
 
     public int addBook(Book book) {
-        return bookDao.insertBook(book);
+        UUID id = UUID.randomUUID();
+        int insertionResult = bookDao.insertBook(id, book);
+
+        String bookCoverURL = bookCoverService.getBookCoverURL(
+                book.getWork_title(), book.getPrimary_author());
+        Logger.getAnonymousLogger().log(Level.INFO, bookCoverURL);
+
+        if (bookCoverURL != null) {
+            byte[] imageArr = bookCoverService.downloadImage(bookCoverURL);
+            insertImageForBook(id, imageArr);
+        }
+
+        return insertionResult;
     }
 
     public Optional<Book> selectBookById(UUID id) {

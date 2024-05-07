@@ -37,6 +37,7 @@ BACKEND
   - i.e., when I add a book, we automatically search for and add the image
   - How can we call the API? And from where? Front-end or back-end?
 
+
 FRONT-END
 - Deploy your endpoint to NGROK(?), then do the FreeCodeCamp frontend deployment method
   - https://ngrok.com/docs/http/
