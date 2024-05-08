@@ -1,0 +1,10 @@
+# Always validate the PR title, and ignore the commits
+titleOnly: true
+
+types:
+- FEATURE
+- DEFECT
+- TEST
+- DOCUMENTATION
+- CI
+- STYLING
