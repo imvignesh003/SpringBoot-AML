@@ -19,6 +19,9 @@ public class BookCoverService {
 
     public String getBookCoverURL(String bookTitle, String authorName) {
         RestTemplate restTemplate = new RestTemplate();
+        if (authorName.isEmpty()) {
+            authorName = " ";
+        }
         String apiUrl = bookCoverApiUrl + "?book_title=" + bookTitle + "&author_name=" + authorName;
         String url = null;
         try {
