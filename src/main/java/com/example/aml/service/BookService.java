@@ -32,14 +32,18 @@ public class BookService {
         UUID id = UUID.randomUUID();
         int insertionResult = bookDao.insertBook(id, book);
 
-        String bookCoverURL = bookCoverService.getBookCoverURL(
-                book.getWork_title(), book.getPrimary_author());
-        Logger.getAnonymousLogger().log(Level.INFO, bookCoverURL);
+        new Thread(() -> {
+            String bookCoverURL = bookCoverService.getBookCoverURL(
+                    book.getWork_title(),
+                    book.getPrimary_author());
 
-        if (bookCoverURL != null) {
-            byte[] imageArr = bookCoverService.downloadImage(bookCoverURL);
-            insertImageForBook(id, imageArr);
-        }
+            Logger.getAnonymousLogger().log(Level.INFO, bookCoverURL);
+
+            if (bookCoverURL != null) {
+                byte[] imageArr = bookCoverService.downloadImage(bookCoverURL);
+                insertImageForBook(id, imageArr);
+            }
+        }).start();
 
         return insertionResult;
     }
