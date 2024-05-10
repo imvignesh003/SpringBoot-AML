@@ -10,3 +10,6 @@ app:
     username: postgres
     password: password
     pool-size: 30
+
+book-cover-api:
+  url: "http://bookcover.longitood.com/bookcover"
