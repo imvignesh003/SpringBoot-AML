@@ -3,6 +3,7 @@ package com.example.aml.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -13,11 +14,12 @@ import java.util.logging.Logger;
 @Service
 public class BookCoverService {
 
-    private static final String BOOK_COVER_API_URL = "http://bookcover.longitood.com/bookcover";
+    @Value("${book-cover-api.url}")
+    private String bookCoverApiUrl;
 
     public String getBookCoverURL(String bookTitle, String authorName) {
         RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = BOOK_COVER_API_URL + "?book_title=" + bookTitle + "&author_name=" + authorName;
+        String apiUrl = bookCoverApiUrl + "?book_title=" + bookTitle + "&author_name=" + authorName;
         String url = null;
         try {
             String result = restTemplate.getForObject(apiUrl, String.class);
