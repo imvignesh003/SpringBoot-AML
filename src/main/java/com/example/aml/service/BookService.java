@@ -1,6 +1,8 @@
 package com.example.aml.service;
 
 import com.example.aml.dao.BookDao;
+import com.example.aml.dto.BookDTO;
+import com.example.aml.mapper.BookDTOMapper;
 import com.example.aml.model.AssociatedImage;
 import com.example.aml.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +17,33 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
     private final BookDao bookDao;
     private final BookCoverService bookCoverService;
+    private final BookDTOMapper bookDTOMapper;
 
     @Autowired // constructor will run automatically with parameters stored in Spring reference area
     public BookService(@Qualifier("postgres") BookDao bookDao,
-                       BookCoverService bookCoverService) {
+                       BookCoverService bookCoverService,
+                       BookDTOMapper bookDTOMapper) {
         this.bookDao = bookDao;
         this.bookCoverService = bookCoverService;
+        this.bookDTOMapper = bookDTOMapper;
     }
 
-    public int addBook(Book book) {
+    public int addBook(BookDTO bookDTO) {
         UUID id = UUID.randomUUID();
+        Book book = new Book(
+                id,
+                bookDTO.getWork_title(),
+                bookDTO.getPrimary_author(),
+                bookDTO.getYear_published(),
+                bookDTO.getWord_count(),
+                null
+                );
         int insertionResult = bookDao.insertBook(id, book);
 
         new Thread(() -> {
@@ -48,18 +62,18 @@ public class BookService {
         return insertionResult;
     }
 
-    public Optional<Book> selectBookById(UUID id) {
-        return bookDao.selectBookById(id);
+    public Optional<BookDTO> selectBookById(UUID id) {
+        return bookDao.selectBookById(id).map(bookDTOMapper);
     }
 
-    public Optional<Book> selectBookByNameAndAuthor(Map<String, String> params) {
+    public Optional<BookDTO> selectBookByNameAndAuthor(Map<String, String> params) {
         return bookDao.selectBookByNameAndAuthor(
                 params.get("work_title"),
                 params.get("primary_author")
-        );
+        ).map(bookDTOMapper);
     }
 
-    public List<Book> getBooks(Map<String, String> params) {
+    public List<BookDTO> getBooks(Map<String, String> params) {
         ArrayList<String> bookQueryWhereFilters = new ArrayList<>();
         ArrayList<String> bookQueryOtherFilters = new ArrayList<>();
         
@@ -73,15 +87,25 @@ public class BookService {
 
         addSortByCondition(params, bookQueryOtherFilters);
 
-        return bookDao.selectBooks(bookQueryWhereFilters, bookQueryOtherFilters);
+        return bookDao.selectBooks(bookQueryWhereFilters, bookQueryOtherFilters)
+                .stream().map(bookDTOMapper).collect(Collectors.toList());
     }
 
     public int deleteBookById(UUID id) {
         return bookDao.deleteBookById(id);
     }
 
-    public int updateBookById(UUID id, Book book) {
-        return bookDao.updateBookById(id, book);
+    public int updateBookById(UUID id, BookDTO book) {
+        return bookDao.updateBookById(
+                id,
+                new Book(
+                        id,
+                        book.getWork_title(),
+                        book.getPrimary_author(),
+                        book.getYear_published(),
+                        book.getWord_count(),
+                        null
+                ));
     }
 
     public int insertImageForBook(UUID id, byte[] imageAsByteArray) {
