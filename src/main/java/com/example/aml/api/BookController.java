@@ -1,7 +1,7 @@
 package com.example.aml.api;
 
+import com.example.aml.dto.BookDTO;
 import com.example.aml.model.AssociatedImage;
-import com.example.aml.model.Book;
 import com.example.aml.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -33,27 +33,27 @@ public class BookController {
     }
 
     @PostMapping // tells Spring this is a POST request (as opposed to get/put/etc.)
-    public void addBook(@RequestBody Book book) {
+    public void addBook(@RequestBody BookDTO book) {
         // @RequestBody takes the body of the api request and instantiates a Book based off of it
         bookService.addBook(book);
     }
 
     @GetMapping(path = "{id}") // Basically, we add the path (in this case, the ID) to the link
     // ex. localhost:8080/api/v1/book/83e0eb8e-7c42-42a8-a7ab-d179a4b1cf24
-    public Book selectBookById(@PathVariable("id") UUID id) {
+    public BookDTO selectBookById(@PathVariable("id") UUID id) {
         return bookService.selectBookById(id)
                 .orElse(null);
     }
 
     @GetMapping(path = "byNameAndAuthor") // Basically, we add the path (in this case, the ID) to the link
-    public Book selectBookByNameAndAuthor(@RequestParam Map<String, String> params) {
+    public BookDTO selectBookByNameAndAuthor(@RequestParam Map<String, String> params) {
         return bookService.selectBookByNameAndAuthor(params)
                 .orElse(null);
     }
 
     // Remove the "path = filter" once this works and you remove the other endpoint
     @GetMapping
-    public List<Book> getBooks(@RequestParam Map<String, String> params) {
+    public List<BookDTO> getBooks(@RequestParam Map<String, String> params) {
         return bookService.getBooks(params);
     }
 
@@ -64,7 +64,7 @@ public class BookController {
 
     @PutMapping(path = "{id}")
     public int updateBookById(@PathVariable("id") UUID id,
-                              @NotNull @Valid @RequestBody Book book) {
+                              @NotNull @Valid @RequestBody BookDTO book) {
         return bookService.updateBookById(id, book);
     }
 
