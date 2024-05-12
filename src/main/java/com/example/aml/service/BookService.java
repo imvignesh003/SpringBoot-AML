@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +42,9 @@ public class BookService {
                 bookDTO.getPrimary_author(),
                 bookDTO.getYear_published(),
                 bookDTO.getWord_count(),
-                null
+                null,
+                new Date(),
+                new Date()
                 );
         int insertionResult = bookDao.insertBook(id, book);
 
@@ -103,7 +106,9 @@ public class BookService {
                         book.getPrimary_author(),
                         book.getYear_published(),
                         book.getWord_count(),
-                        null
+                        null,
+                        null,
+                        new Date()
                 ));
     }
 

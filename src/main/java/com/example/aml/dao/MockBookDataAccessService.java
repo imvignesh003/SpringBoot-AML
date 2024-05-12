@@ -5,6 +5,7 @@ import com.example.aml.model.Book;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,7 +23,9 @@ public class MockBookDataAccessService implements BookDao {
                 book.getPrimary_author(),
                 book.getYear_published(),
                 book.getWord_count(),
-                null));
+                null,
+                book.getCreated_at(),
+                book.getUpdated_at()));
         return 1;
     }
 
@@ -49,7 +52,9 @@ public class MockBookDataAccessService implements BookDao {
                                         book.getPrimary_author(),
                                         book.getYear_published(),
                                         book.getWord_count(),
-                                        null
+                                        null,
+                                        book.getCreated_at(),
+                                        new Date()
                                 )); // if you need to modify this, create a new Book constructor
                                 return 1;
                             }
