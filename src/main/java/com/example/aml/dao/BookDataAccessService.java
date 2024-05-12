@@ -90,8 +90,8 @@ public class BookDataAccessService implements BookDao {
     @Override
     public int insertBook(UUID id, Book book) {
         var statement = """
-                INSERT INTO book(id, work_title, primary_author, year_published, word_count)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO book(id, work_title, primary_author, year_published, word_count, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 statement,
@@ -99,7 +99,9 @@ public class BookDataAccessService implements BookDao {
                 book.getWork_title(),
                 book.getPrimary_author(),
                 book.getYear_published(),
-                book.getWord_count());
+                book.getWord_count(),
+                book.getCreated_at(),
+                book.getUpdated_at());
     }
 
     @Override
@@ -122,7 +124,8 @@ public class BookDataAccessService implements BookDao {
                     work_title = ?,
                     primary_author = ?,
                     year_published = ?,
-                    word_count = ?
+                    word_count = ?,
+                    updated_by = ?
                 WHERE id = ?
                 """;
         return jdbcTemplate.update(
@@ -132,6 +135,7 @@ public class BookDataAccessService implements BookDao {
                 book.getPrimary_author(),
                 book.getYear_published(),
                 book.getWord_count(),
+                book.getUpdated_at(),
                 id);
     }
 
@@ -147,7 +151,9 @@ public class BookDataAccessService implements BookDao {
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count"),
-                        (UUID) resultSet.getObject("picture_id"))));
+                        (UUID) resultSet.getObject("picture_id"),
+                        resultSet.getDate("created_at"),
+                        resultSet.getDate("updated_at"))));
     }
 
     @Override
@@ -165,7 +171,9 @@ public class BookDataAccessService implements BookDao {
                                 resultSet.getString("primary_author"),
                                 resultSet.getInt("year_published"),
                                 resultSet.getInt("word_count"),
-                                (UUID) resultSet.getObject("picture_id"))));
+                                (UUID) resultSet.getObject("picture_id"),
+                                resultSet.getDate("created_at"),
+                                resultSet.getDate("updated_at"))));
     }
 
     @Override
@@ -187,7 +195,9 @@ public class BookDataAccessService implements BookDao {
                         resultSet.getString("primary_author"),
                         resultSet.getInt("year_published"),
                         resultSet.getInt("word_count"),
-                        (UUID) resultSet.getObject("picture_id")));
+                        (UUID) resultSet.getObject("picture_id"),
+                        resultSet.getDate("created_at"),
+                        resultSet.getDate("updated_at")));
     }
 
     private static String getWhereFiltersFromArray(ArrayList<String> bookQueryFilters) {
