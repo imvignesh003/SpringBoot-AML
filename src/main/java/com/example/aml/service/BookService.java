@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -88,7 +87,7 @@ public class BookService {
         addSortByCondition(params, bookQueryOtherFilters);
 
         return bookDao.selectBooks(bookQueryWhereFilters, bookQueryOtherFilters)
-                .stream().map(bookDTOMapper).collect(Collectors.toList());
+                .stream().map(bookDTOMapper).toList();
     }
 
     public int deleteBookById(UUID id) {
