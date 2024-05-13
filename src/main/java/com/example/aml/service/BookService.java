@@ -38,20 +38,20 @@ public class BookService {
         UUID id = UUID.randomUUID();
         Book book = new Book(
                 id,
-                bookDTO.getWork_title(),
-                bookDTO.getPrimary_author(),
-                bookDTO.getYear_published(),
-                bookDTO.getWord_count(),
+                bookDTO.getWorkTitle(),
+                bookDTO.getPrimaryAuthor(),
+                bookDTO.getYearPublished(),
+                bookDTO.getWordCount(),
                 null,
                 new Date(),
                 new Date()
-                );
+        );
         int insertionResult = bookDao.insertBook(id, book);
 
         new Thread(() -> {
             String bookCoverURL = bookCoverService.getBookCoverURL(
-                    book.getWork_title(),
-                    book.getPrimary_author());
+                    book.getWorkTitle(),
+                    book.getPrimaryAuthor());
 
             Logger.getAnonymousLogger().log(Level.INFO, bookCoverURL);
 
@@ -78,7 +78,7 @@ public class BookService {
     public List<BookDTO> getBooks(Map<String, String> params) {
         ArrayList<String> bookQueryWhereFilters = new ArrayList<>();
         ArrayList<String> bookQueryOtherFilters = new ArrayList<>();
-        
+
         addBookQueryStringFilters(params, bookQueryWhereFilters, "primary_author");
         addBookQueryStringFilters(params, bookQueryWhereFilters, "work_title");
 
@@ -102,10 +102,10 @@ public class BookService {
                 id,
                 new Book(
                         id,
-                        book.getWork_title(),
-                        book.getPrimary_author(),
-                        book.getYear_published(),
-                        book.getWord_count(),
+                        book.getWorkTitle(),
+                        book.getPrimaryAuthor(),
+                        book.getYearPublished(),
+                        book.getWordCount(),
                         null,
                         null,
                         new Date()

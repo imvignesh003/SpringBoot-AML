@@ -3,6 +3,7 @@ package com.example.aml.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,9 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RequiredArgsConstructor(onConstructor=@__(@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)))
 public class BookDTO {
-    private final UUID id;
-    @NotBlank private final String work_title;
-    private final String primary_author;
-    private final int year_published;
-    private final int word_count;
+    @JsonProperty("id") private final UUID id;
+    @NotBlank @JsonProperty("work_title") private final String workTitle;
+    @JsonProperty("primary_author") private final String primaryAuthor;
+    @JsonProperty("year_published") private final int yearPublished;
+    @JsonProperty("word_count") private final int wordCount;
 }
