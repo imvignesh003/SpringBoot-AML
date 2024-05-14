@@ -68,7 +68,7 @@ public class BookDataAccessService implements BookDao {
                                 Base64.getDecoder().decode(resultSet.getBytes("picture"))
                         );
                     }
-                );
+            );
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(
                     Level.INFO, e.toString());
@@ -96,12 +96,12 @@ public class BookDataAccessService implements BookDao {
         return jdbcTemplate.update(
                 statement,
                 id,
-                book.getWork_title(),
-                book.getPrimary_author(),
-                book.getYear_published(),
-                book.getWord_count(),
-                book.getCreated_at(),
-                book.getUpdated_at());
+                book.getWorkTitle(),
+                book.getPrimaryAuthor(),
+                book.getYearPublished(),
+                book.getWordCount(),
+                book.getCreatedAt(),
+                book.getUpdatedAt());
     }
 
     @Override
@@ -131,11 +131,11 @@ public class BookDataAccessService implements BookDao {
         return jdbcTemplate.update(
                 statement,
                 id,
-                book.getWork_title(),
-                book.getPrimary_author(),
-                book.getYear_published(),
-                book.getWord_count(),
-                book.getUpdated_at(),
+                book.getWorkTitle(),
+                book.getPrimaryAuthor(),
+                book.getYearPublished(),
+                book.getWordCount(),
+                book.getUpdatedAt(),
                 id);
     }
 
@@ -143,17 +143,17 @@ public class BookDataAccessService implements BookDao {
     public Optional<Book> selectBookById(UUID id) {
         return Optional.ofNullable(
                 jdbcTemplate.queryForObject(
-                "SELECT * FROM book WHERE id = ?",
-                new Object[]{id},
-                (resultSet, i) -> new Book(
-                        UUID.fromString(resultSet.getString("id")),
-                        resultSet.getString("work_title"),
-                        resultSet.getString("primary_author"),
-                        resultSet.getInt("year_published"),
-                        resultSet.getInt("word_count"),
-                        (UUID) resultSet.getObject("picture_id"),
-                        resultSet.getDate("created_at"),
-                        resultSet.getDate("updated_at"))));
+                        "SELECT * FROM book WHERE id = ?",
+                        new Object[]{id},
+                        (resultSet, i) -> new Book(
+                                UUID.fromString(resultSet.getString("id")),
+                                resultSet.getString("work_title"),
+                                resultSet.getString("primary_author"),
+                                resultSet.getInt("year_published"),
+                                resultSet.getInt("word_count"),
+                                (UUID) resultSet.getObject("picture_id"),
+                                resultSet.getDate("created_at"),
+                                resultSet.getDate("updated_at"))));
     }
 
     @Override

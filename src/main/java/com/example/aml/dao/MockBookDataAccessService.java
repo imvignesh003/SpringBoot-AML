@@ -19,13 +19,13 @@ public class MockBookDataAccessService implements BookDao {
     public int insertBook(UUID id, Book book) {
         bookDB.add(new Book(
                 id,
-                book.getWork_title(),
-                book.getPrimary_author(),
-                book.getYear_published(),
-                book.getWord_count(),
+                book.getWorkTitle(),
+                book.getPrimaryAuthor(),
+                book.getYearPublished(),
+                book.getWordCount(),
                 null,
-                book.getCreated_at(),
-                book.getUpdated_at()));
+                book.getCreatedAt(),
+                book.getUpdatedAt()));
         return 1;
     }
 
@@ -43,29 +43,29 @@ public class MockBookDataAccessService implements BookDao {
     public int updateBookById(UUID id, Book book) {
         return selectBookById(id)
                 .map(oldBook ->
-                        {
-                            int index = bookDB.indexOf(oldBook);
-                            if (index >= 0) {
-                                bookDB.set(index, new Book(
-                                        id,
-                                        book.getWork_title(),
-                                        book.getPrimary_author(),
-                                        book.getYear_published(),
-                                        book.getWord_count(),
-                                        null,
-                                        book.getCreated_at(),
-                                        new Date()
-                                )); // if you need to modify this, create a new Book constructor
-                                return 1;
-                            }
-                            return 0;
-                        }).orElse(0);
+                {
+                    int index = bookDB.indexOf(oldBook);
+                    if (index >= 0) {
+                        bookDB.set(index, new Book(
+                                id,
+                                book.getWorkTitle(),
+                                book.getPrimaryAuthor(),
+                                book.getYearPublished(),
+                                book.getWordCount(),
+                                null,
+                                book.getCreatedAt(),
+                                new Date()
+                        )); // if you need to modify this, create a new Book constructor
+                        return 1;
+                    }
+                    return 0;
+                }).orElse(0);
     }
 
     @Override
     public Optional<Book> selectBookById(UUID id) {
         return bookDB.stream().filter(
-                book -> book.getId().equals(id))
+                        book -> book.getId().equals(id))
                 .findFirst();
     }
 
@@ -74,7 +74,7 @@ public class MockBookDataAccessService implements BookDao {
             ArrayList<String> bookQueryWhereFilters, ArrayList<String> bookQueryOtherFilters) {
         // not maintained
         return bookDB.stream().filter(
-                book -> book.getPrimary_author().equals("")).toList();
+                book -> book.getPrimaryAuthor().equals("")).toList();
     }
 
     @Override

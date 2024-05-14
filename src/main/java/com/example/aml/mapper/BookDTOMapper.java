@@ -12,10 +12,10 @@ public class BookDTOMapper implements Function<Book, BookDTO> {
     public BookDTO apply(Book book) {
         return new BookDTO(
                 book.getId(),
-                book.getWork_title(),
-                book.getPrimary_author(),
-                book.getYear_published(),
-                book.getWord_count()
+                book.getWorkTitle(),
+                book.getPrimaryAuthor(),
+                book.getYearPublished(),
+                book.getWordCount()
         );
     }
 }
