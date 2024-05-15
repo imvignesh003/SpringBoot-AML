@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class BookDataAccessService implements BookDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final RowMapper<Book> bookRowMapper = new RowMapper<Book>() {
+    private static final RowMapper<Book> bookRowMapper = new RowMapper<Book>() {
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Book(
                     UUID.fromString(rs.getString("id")),
