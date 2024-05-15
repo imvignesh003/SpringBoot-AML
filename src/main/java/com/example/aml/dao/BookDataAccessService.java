@@ -8,8 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -22,19 +20,15 @@ import java.util.logging.Logger;
 public class BookDataAccessService implements BookDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private static final RowMapper<Book> bookRowMapper = new RowMapper<Book>() {
-        public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Book(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("work_title"),
-                    rs.getString("primary_author"),
-                    rs.getInt("year_published"),
-                    rs.getInt("word_count"),
-                    (UUID) rs.getObject("picture_id"),
-                    rs.getDate("created_at"),
-                    rs.getDate("updated_at"));
-        }
-    };
+    private static final RowMapper<Book> bookRowMapper = (rs, rowNum) -> new Book(
+            UUID.fromString(rs.getString("id")),
+            rs.getString("work_title"),
+            rs.getString("primary_author"),
+            rs.getInt("year_published"),
+            rs.getInt("word_count"),
+            (UUID) rs.getObject("picture_id"),
+            rs.getDate("created_at"),
+            rs.getDate("updated_at"));
 
     @Autowired
     public BookDataAccessService(JdbcTemplate jdbcTemplate) {
@@ -68,7 +62,7 @@ public class BookDataAccessService implements BookDao {
 
     @Override
     public AssociatedImage getImageForBook(UUID bookId) {
-        AssociatedImage image = null;
+        AssociatedImage image;
         try {
             image = jdbcTemplate.queryForObject(
                     String.format("""
@@ -156,7 +150,19 @@ public class BookDataAccessService implements BookDao {
     public Optional<Book> selectBookById(UUID id) {
         return Optional.ofNullable(
                 jdbcTemplate.queryForObject(
-                        "SELECT * FROM book WHERE id = ?",
+                        """
+                        SELECT
+                            id,
+                            work_title,
+                            primary_author,
+                            year_published,
+                            word_count,
+                            picture_id,
+                            created_at,
+                            updated_at
+                        FROM book
+                        WHERE id = ?
+                        """,
                         bookRowMapper,
                         id));
     }
@@ -166,7 +172,15 @@ public class BookDataAccessService implements BookDao {
         return Optional.ofNullable(
                 jdbcTemplate.queryForObject(
                         String.format("""
-                        SELECT *
+                        SELECT
+                            id,
+                            work_title,
+                            primary_author,
+                            year_published,
+                            word_count,
+                            picture_id,
+                            created_at,
+                            updated_at
                         FROM book
                         WHERE work_title = '%s' AND primary_author = '%s'
                         """, workTitle, primaryAuthor),
@@ -181,7 +195,15 @@ public class BookDataAccessService implements BookDao {
 
         return jdbcTemplate.query(
                 String.format("""
-                        SELECT *
+                        SELECT
+                            id,
+                            work_title,
+                            primary_author,
+                            year_published,
+                            word_count,
+                            picture_id,
+                            created_at,
+                            updated_at
                         FROM book
                         %s
                         %s;
