@@ -37,6 +37,22 @@ public class BookDataAccessService implements BookDao {
 
     @Override
     public int insertImage(UUID bookId, byte[] imageAsByteArray) {
+        Optional<UUID> pictureToBeDeleted = Optional.ofNullable(
+                jdbcTemplate.queryForObject(
+                        """
+                        SELECT picture_id
+                        FROM book
+                        WHERE id = ?
+                        """,
+                        UUID.class,
+                        bookId));
+        pictureToBeDeleted.ifPresent(uuid -> jdbcTemplate.update(
+                """
+                        DELETE from pictures
+                        WHERE id = ?
+                        """,
+                uuid
+        ));
         UUID pictureId = UUID.randomUUID();
         var pictureStatement = """
                 INSERT INTO pictures(id, picture)
@@ -113,13 +129,41 @@ public class BookDataAccessService implements BookDao {
 
     @Override
     public int deleteBookById(UUID id) {
-        var statement = """
+        Optional<Book> toBeDeleted = Optional.ofNullable(
+                jdbcTemplate.queryForObject(
+                        """
+                        SELECT
+                            id,
+                            work_title,
+                            primary_author,
+                            year_published,
+                            word_count,
+                            picture_id,
+                            created_at,
+                            updated_at
+                        FROM book
+                        WHERE id = ?
+                        """,
+                        bookRowMapper,
+                        id));
+        if (toBeDeleted.isEmpty()) {
+            return 0;
+        }
+        var bookStatement = """
                 DELETE FROM book
                 WHERE id = ?
                 """;
-        return jdbcTemplate.update(
-                statement,
+        int bookDeletionResult = jdbcTemplate.update(
+                bookStatement,
                 id);
+        var pictureStatement = """
+                DELETE from pictures
+                WHERE id = ?
+                """;
+        jdbcTemplate.update(
+                pictureStatement, toBeDeleted.get().getPicture()
+        );
+        return bookDeletionResult;
     }
 
     @Override
