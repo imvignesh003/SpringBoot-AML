@@ -49,16 +49,13 @@ public class BookService {
         int insertionResult = bookDao.insertBook(id, book);
 
         new Thread(() -> {
-            String bookCoverURL = bookCoverService.getBookCoverURL(
+            Optional<byte[]> bookCoverArray = bookCoverService.getBookCoverURL(
                     book.getWorkTitle(),
                     book.getPrimaryAuthor());
 
-            Logger.getAnonymousLogger().log(Level.INFO, bookCoverURL);
+            Logger.getAnonymousLogger().log(Level.INFO, String.valueOf(bookCoverArray));
 
-            if (bookCoverURL != null) {
-                byte[] imageArr = bookCoverService.downloadImage(bookCoverURL);
-                insertImageForBook(id, imageArr);
-            }
+            bookCoverArray.ifPresent(bytes -> insertImageForBook(id, bytes));
         }).start();
 
         return insertionResult;

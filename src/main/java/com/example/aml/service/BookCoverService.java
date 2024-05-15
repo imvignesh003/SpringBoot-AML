@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ public class BookCoverService {
     @Value("${book-cover-api.url}")
     private String bookCoverApiUrl;
 
-    public String getBookCoverURL(String bookTitle, String authorName) {
+    public Optional<byte[]> getBookCoverURL(String bookTitle, String authorName) {
         RestTemplate restTemplate = new RestTemplate();
         if (authorName.isEmpty()) {
             authorName = " ";
@@ -38,12 +39,8 @@ public class BookCoverService {
                     Level.INFO,
                     String.format("Unable to parse JSON. Error: %s", e));
         }
-        return url;
-    }
-
-    public byte[] downloadImage(String imageUrl) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(imageUrl, byte[].class);
+        if (url == null) return Optional.empty();
+        return Optional.ofNullable(restTemplate.getForObject(url, byte[].class));
     }
 }
 
