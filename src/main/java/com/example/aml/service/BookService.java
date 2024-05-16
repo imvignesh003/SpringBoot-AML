@@ -44,7 +44,8 @@ public class BookService {
                 bookDTO.getWordCount(),
                 null,
                 new Date(),
-                new Date()
+                new Date(),
+                bookDTO.getGenres()
         );
         int insertionResult = bookDao.insertBook(id, book);
 
@@ -94,18 +95,19 @@ public class BookService {
         return bookDao.deleteBookById(id);
     }
 
-    public int updateBookById(UUID id, BookDTO book) {
+    public int updateBookById(UUID id, BookDTO bookDTO) {
         return bookDao.updateBookById(
                 id,
                 new Book(
                         id,
-                        book.getWorkTitle(),
-                        book.getPrimaryAuthor(),
-                        book.getYearPublished(),
-                        book.getWordCount(),
+                        bookDTO.getWorkTitle(),
+                        bookDTO.getPrimaryAuthor(),
+                        bookDTO.getYearPublished(),
+                        bookDTO.getWordCount(),
                         null,
                         null,
-                        new Date()
+                        new Date(),
+                        bookDTO.getGenres()
                 ));
     }
 

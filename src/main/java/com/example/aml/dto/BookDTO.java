@@ -20,4 +20,5 @@ public class BookDTO {
     @JsonProperty("primary_author") private final String primaryAuthor;
     @JsonProperty("year_published") private final int yearPublished;
     @JsonProperty("word_count") private final int wordCount;
+    @JsonProperty("genres") private final String[] genres;
 }

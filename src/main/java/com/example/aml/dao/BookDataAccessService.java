@@ -20,15 +20,24 @@ import java.util.logging.Logger;
 public class BookDataAccessService implements BookDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private static final RowMapper<Book> bookRowMapper = (rs, rowNum) -> new Book(
-            UUID.fromString(rs.getString("id")),
-            rs.getString("work_title"),
-            rs.getString("primary_author"),
-            rs.getInt("year_published"),
-            rs.getInt("word_count"),
-            (UUID) rs.getObject("picture_id"),
-            rs.getDate("created_at"),
-            rs.getDate("updated_at"));
+    private static final RowMapper<Book> bookRowMapper = (rs, rowNum) -> {
+        String[] genreList = null;
+        if (rs.getArray("genres") != null) {
+            genreList = (String[]) rs.getArray("genres").getArray();
+        }
+
+        return new Book(
+                UUID.fromString(rs.getString("id")),
+                rs.getString("work_title"),
+                rs.getString("primary_author"),
+                rs.getInt("year_published"),
+                rs.getInt("word_count"),
+                (UUID) rs.getObject("picture_id"),
+                rs.getDate("created_at"),
+                rs.getDate("updated_at"),
+                genreList
+        );
+    };
 
     @Autowired
     public BookDataAccessService(JdbcTemplate jdbcTemplate) {
@@ -113,8 +122,8 @@ public class BookDataAccessService implements BookDao {
     @Override
     public int insertBook(UUID id, Book book) {
         var statement = """
-                INSERT INTO book(id, work_title, primary_author, year_published, word_count, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO book(id, work_title, primary_author, year_published, word_count, created_at, updated_at, genres)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 statement,
@@ -124,7 +133,8 @@ public class BookDataAccessService implements BookDao {
                 book.getYearPublished(),
                 book.getWordCount(),
                 book.getCreatedAt(),
-                book.getUpdatedAt());
+                book.getUpdatedAt(),
+                book.getGenres());
     }
 
     @Override
@@ -140,7 +150,8 @@ public class BookDataAccessService implements BookDao {
                             word_count,
                             picture_id,
                             created_at,
-                            updated_at
+                            updated_at,
+                            genres
                         FROM book
                         WHERE id = ?
                         """,
@@ -203,7 +214,8 @@ public class BookDataAccessService implements BookDao {
                             word_count,
                             picture_id,
                             created_at,
-                            updated_at
+                            updated_at,
+                            genres
                         FROM book
                         WHERE id = ?
                         """,
@@ -224,7 +236,8 @@ public class BookDataAccessService implements BookDao {
                             word_count,
                             picture_id,
                             created_at,
-                            updated_at
+                            updated_at,
+                            genres
                         FROM book
                         WHERE work_title = '%s' AND primary_author = '%s'
                         """, workTitle, primaryAuthor),
@@ -247,7 +260,8 @@ public class BookDataAccessService implements BookDao {
                             word_count,
                             picture_id,
                             created_at,
-                            updated_at
+                            updated_at,
+                            genres
                         FROM book
                         %s
                         %s;
