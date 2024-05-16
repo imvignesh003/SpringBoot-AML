@@ -16,4 +16,5 @@ public class Book {
     private final UUID picture;
     @NotBlank private final Date createdAt;
     @NotBlank private final Date updatedAt;
+    private final String[] genres;
 }

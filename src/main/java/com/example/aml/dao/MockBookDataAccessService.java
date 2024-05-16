@@ -25,7 +25,8 @@ public class MockBookDataAccessService implements BookDao {
                 book.getWordCount(),
                 null,
                 book.getCreatedAt(),
-                book.getUpdatedAt()));
+                book.getUpdatedAt(),
+                book.getGenres()));
         return 1;
     }
 
@@ -54,7 +55,8 @@ public class MockBookDataAccessService implements BookDao {
                                 book.getWordCount(),
                                 null,
                                 book.getCreatedAt(),
-                                new Date()
+                                new Date(),
+                                book.getGenres()
                         )); // if you need to modify this, create a new Book constructor
                         return 1;
                     }
