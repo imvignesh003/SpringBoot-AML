@@ -26,6 +26,9 @@ If everything is setup already:
 - In Postman:
       - Send requests to **localhost:8080/api/v1/book**
       - Format is **json**
+- In Swagger-UI:
+      - Hit **http://localhost:8080/swagger-ui/index.html** in your browser
+      - Send As many requests u need using Swagger-UI
 
 ### Setup Instructions
 Set up or re-run docker container:
@@ -55,3 +58,6 @@ Within this project:
 Within Postgres (with db already setup):
 - To list existing databases: **\l**
 - View table: **\d ---table-name---**
+
+
+
