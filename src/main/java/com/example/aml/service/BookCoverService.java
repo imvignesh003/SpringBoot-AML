@@ -39,7 +39,8 @@ public class BookCoverService {
                     Level.INFO,
                     String.format("Unable to parse JSON. Error: %s", e));
         }
-        if (url == null) return Optional.empty();
+        if (url == null) 
+            return Optional.empty();
         return Optional.ofNullable(restTemplate.getForObject(url, byte[].class));
     }
 }

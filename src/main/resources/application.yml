@@ -6,9 +6,9 @@
 # Connection Details for Database
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/demodb
+    jdbc-url: jdbc:postgresql://0.0.0.0:5432/demodb
     username: postgres
-    password: password
+    password: vignesh
     pool-size: 30
 
 book-cover-api:

@@ -1,10 +1,19 @@
 CREATE TABLE book (
     id UUID NOT NULL PRIMARY KEY,
-    name VARCHAR2(100) NOT NULL,
-    primary_author VARCHAR2(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    primary_author VARCHAR(100) NOT NULL,
     year_published INT,
     word_count INT
 );
+
+create table if not exists public.pictures
+(
+    id      uuid not null
+        constraint pictures_pk
+            primary key,
+    picture bytea
+);
+
 
 ALTER TABLE book
 RENAME COLUMN name to work_title;
@@ -21,10 +30,4 @@ ADD updated_at timestamp not null;
 ALTER TABLE book
 ADD genres text[];
 
-create table if not exists public.pictures
-(
-    id      uuid not null
-        constraint pictures_pk
-            primary key,
-    picture bytea
-);
+
