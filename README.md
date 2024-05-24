@@ -48,6 +48,7 @@ Setup and modify database within Postgres (with UUID support):
 - **SELECT uuid_generate_v4();**
 
 Within this project:
+- Change the password in application.yml to [yourPassword]
 - Add a file in the project root called "flyway.conf" with information in the following format:
     flyway.user=postgres
     flyway.password=[yourPassword]
